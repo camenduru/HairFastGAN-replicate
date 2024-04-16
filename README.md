@@ -12,6 +12,8 @@ https://github.com/AIRI-Institute/HairFastGAN
 https://arxiv.org/abs/2404.01094
 
 ### 🖼 Output
+![download](https://github.com/camenduru/HairFastGAN-jupyter/assets/54370274/60742351-3f27-438f-9926-08ab59508463)
+![download](https://github.com/camenduru/HairFastGAN-jupyter/assets/54370274/81791a76-4d93-4dc6-8031-40ec8574a7f7)
 
 ### 🏢 Sponsor
 https://replicate.com
