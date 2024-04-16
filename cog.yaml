@@ -1,0 +1,35 @@
+build:
+  gpu: true
+  cuda: "12.1"
+  python_version: "3.10"
+  run:
+    - apt update -y && apt install -y software-properties-common python3-launchpadlib && apt update -y && add-apt-repository -y ppa:git-core/ppa && apt update -y
+    - apt install -y gcc g++ aria2 git git-lfs wget libgl1 libglib2.0-0 ffmpeg cmake libgtk2.0-0 libopenmpi-dev
+    - pip install -q torch==2.2.1+cu121 torchvision==0.17.1+cu121 torchaudio==2.2.1+cu121 torchtext==0.17.1 torchdata==0.7.1 --extra-index-url https://download.pytorch.org/whl/cu121
+    - git clone -b dev https://github.com/camenduru/HairFastGAN /content/HairFastGAN
+    - pip install -q ninja face_alignment dill==0.2.7.1 addict fpie git+https://github.com/openai/CLIP
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/ArcFace/backbone_ir50.pth -d /content/HairFastGAN/pretrained_models/ArcFace -o backbone_ir50.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/ArcFace/backbone_r100.pth -d /content/HairFastGAN/pretrained_models/ArcFace -o backbone_r100.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/ArcFace/ir_se50.pth -d /content/HairFastGAN/pretrained_models/ArcFace -o ir_se50.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/BiSeNet/face_parsing_79999_iter.pth -d /content/HairFastGAN/pretrained_models/BiSeNet -o face_parsing_79999_iter.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/BiSeNet/seg.pth -d /content/HairFastGAN/pretrained_models/BiSeNet -o seg.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/Blending/checkpoint.pth -d /content/HairFastGAN/pretrained_models/Blending -o checkpoint.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/Blending/checkpoint_old.pth -d /content/HairFastGAN/pretrained_models/Blending -o checkpoint_old.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/Blending/checkpoint_old2.pth -d /content/HairFastGAN/pretrained_models/Blending -o checkpoint_old2.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/FeatureStyleEncoder/143_enc.pth -d /content/HairFastGAN/pretrained_models/FeatureStyleEncoder -o 143_enc.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/FeatureStyleEncoder/79999_iter.pth -d /content/HairFastGAN/pretrained_models/FeatureStyleEncoder -o 79999_iter.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/FeatureStyleEncoder/backbone.pth -d /content/HairFastGAN/pretrained_models/FeatureStyleEncoder -o backbone.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/FeatureStyleEncoder/psp_ffhq_encode.pt -d /content/HairFastGAN/pretrained_models/FeatureStyleEncoder -o psp_ffhq_encode.pt
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/PostProcess/latent_avg.pt -d /content/HairFastGAN/pretrained_models/PostProcess -o latent_avg.pt
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/PostProcess/pp_model.pth -d /content/HairFastGAN/pretrained_models/PostProcess -o pp_model.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/Rotate/rotate_best.pth -d /content/HairFastGAN/pretrained_models/Rotate -o rotate_best.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/STAR/WFLW_STARLoss_NME_4_02_FR_2_32_AUC_0_605.pkl -d /content/HairFastGAN/pretrained_models -o STAR/WFLW_STARLoss_NME_4_02_FR_2_32_AUC_0_605.pkl
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/ShapeAdaptor/mask_generator.pth -d /content/HairFastGAN/pretrained_models/ShapeAdaptor -o mask_generator.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/ShapeAdaptor/shape_predictor_68_face_landmarks.dat -d /content/HairFastGAN/pretrained_models/ShapeAdaptor -o shape_predictor_68_face_landmarks.dat
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/StyleGAN/ffhq.pkl -d /content/HairFastGAN/pretrained_models/StyleGAN -o ffhq.pkl
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/StyleGAN/ffhq.pt -d /content/HairFastGAN/pretrained_models/StyleGAN -o ffhq.pt
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/StyleGAN/ffhq_PCA.npz -d /content/HairFastGAN/pretrained_models/StyleGAN -o ffhq_PCA.npz
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/encoder4editing/e4e_ffhq_encode.pt -d /content/HairFastGAN/pretrained_models/encoder4editing -o e4e_ffhq_encode.pt
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/sean_checkpoints/CelebA-HQ_pretrained/latest_net_D.pth -d /content/HairFastGAN/pretrained_models/sean_checkpoints/CelebA-HQ_pretrained -o latest_net_D.pth
+    - aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/AIRI-Institute/HairFastGAN/resolve/main/pretrained_models/sean_checkpoints/CelebA-HQ_pretrained/latest_net_G.pth -d /content/HairFastGAN/pretrained_models/sean_checkpoints/CelebA-HQ_pretrained -o latest_net_G.pth
+predict: "/src/predict.py:Predictor"
