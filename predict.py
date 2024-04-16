@@ -5,10 +5,10 @@ sys.path.append('/content/HairFastGAN')
 os.chdir('/content/HairFastGAN')
 
 import torchvision.transforms as transforms
-from hair_swap import HairFast, get_parser
 
 class Predictor(BasePredictor):
     def setup(self) -> None:
+        from hair_swap import HairFast, get_parser
         model_args = get_parser()
         self.hair_fast = HairFast(model_args.parse_args([]))
     def predict(
